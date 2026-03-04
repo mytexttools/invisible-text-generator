@@ -1,1 +1,1124 @@
-# invisible-text-generator
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invisible Text Generator (Zero Width Space) – Copy & Paste Blank Text for Instagram & Facebook</title><meta name="description" content="Free Invisible Text Generator using zero width space characters. Create blank text for Instagram bio, Facebook comments, Discord and copy instantly. Encode, decode and inspect hidden Unicode text online.">
+    <!-- same font stack & icons as password generator -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ecf2f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* main vault card (identical to password tool) */
+        .vault-card {
+            max-width: 920px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(4px);
+            border-radius: 3rem;
+            box-shadow: 0 30px 60px -20px rgba(0,20,40,0.3), 0 10px 20px -8px rgba(0,0,0,0.2);
+            padding: 2.2rem 2.2rem 2rem;
+            border: 1px solid rgba(255,255,255,0.8);
+            margin: 0 auto 2rem;
+        }
+
+        /* header with brand icon */
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .brand-icon {
+            background: linear-gradient(150deg, #17273f, #0a1b30);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 10px 18px -8px #102b44;
+        }
+        .brand-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.9rem;
+            letter-spacing: -0.02em;
+            color: #0a1f31;
+            line-height: 1.1;
+        }
+        .brand-text .sub {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #46648b;
+        }
+
+        /* NEW BANNER for social media (facebook/instagram) */
+        .social-banner {
+            background: linear-gradient(115deg, #e3f0ff 0%, #d2e6ff 100%);
+            border: 1px solid #b7d2f0;
+            border-radius: 40px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem 1.5rem;
+            box-shadow: 0 10px 20px -12px #194e7c;
+        }
+        .banner-icon-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .banner-icon-group i {
+            font-size: 2rem;
+            color: #2f5a8c;
+        }
+        .fb-icon {
+            color: #1877F2;
+            background: white;
+            border-radius: 50%;
+            padding: 6px;
+        }
+        .ig-icon {
+            color: #d62976;
+            background: white;
+            border-radius: 30%;
+            padding: 6px;
+        }
+        .banner-text {
+            font-weight: 600;
+            color: #0b2e4f;
+            flex: 1;
+            min-width: 240px;
+        }
+        .banner-text span {
+            background: #0a223b;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+        .banner-copy-demo {
+            background: #ffffffc9;
+            border-radius: 60px;
+            padding: 0.5rem 0.8rem 0.5rem 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #f0f5ff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1b3652;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .banner-copy-demo i {
+            background: #0b294b;
+            color: white;
+            border-radius: 50%;
+            padding: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .banner-copy-demo i:hover {
+            background: #1d4f82;
+        }
+
+        /* tab navigation (multi‑page) */
+        .page-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: #eaf1fa;
+            padding: 0.4rem;
+            border-radius: 4rem;
+        }
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.75rem 0.2rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #2c405b;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .tab-btn i {
+            font-size: 1rem;
+        }
+        .tab-btn.active {
+            background: white;
+            box-shadow: 0 6px 14px rgba(0,40,70,0.15);
+            color: #0f2d4a;
+        }
+        .tab-btn:not(.active):hover {
+            background: rgba(255,255,255,0.5);
+        }
+
+        .page {
+            display: none;
+        }
+        .page.active-page {
+            display: block;
+        }
+
+        /* input / textarea styling */
+        .input-field {
+            margin-bottom: 1.5rem;
+        }
+        .input-field label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #2a405e;
+            margin-bottom: 0.4rem;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 1rem 1.3rem;
+            background: white;
+            border: 2px solid #d5e0ed;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: 0.2s;
+            outline: none;
+            font-weight: 500;
+            color: #0a263c;
+            resize: vertical;
+            font-family: 'Inter', monospace;
+        }
+        textarea:focus, input:focus {
+            border-color: #3f6ef0;
+            box-shadow: 0 0 0 4px rgba(63,110,240,0.12);
+        }
+        .faint-preview {
+            background: #f3f8ff;
+            border-color: #c9d9ec;
+        }
+
+        /* stat cards / dashboard style */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.3rem 0.8rem;
+            border: 1px solid #dfecf7;
+            text-align: center;
+        }
+        .stat-card h4 {
+            font-size: 0.8rem;
+            color: #42668f;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0b2b48;
+            line-height: 1.2;
+        }
+        .stat-note {
+            font-size: 0.7rem;
+            color: #627d9c;
+        }
+
+        /* generated box (like password display) */
+        .generated-box {
+            background: #0e2035;
+            border-radius: 40px;
+            padding: 0.6rem 1rem 0.6rem 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #3d5e83;
+            margin: 1.2rem 0 0.5rem;
+        }
+        .generated-password {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            color: #eaf2ff;
+            background: transparent;
+            border: none;
+            word-break: break-all;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        .icon-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid #47688d;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .icon-btn:hover {
+            background: #2b5680;
+        }
+
+        /* action group */
+        .action-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn-primary, .btn-secondary {
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.9rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            box-shadow: 0 5px 12px rgba(0,25,50,0.1);
+            flex: 1 1 auto;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(145deg, #123959, #1b4b73);
+            color: white;
+            border: 1px solid #2f5680;
+        }
+        .btn-secondary {
+            background: white;
+            color: #1e3d60;
+            border: 1px solid #cbd9ec;
+        }
+        .btn-secondary:hover {
+            background: #ecf5ff;
+        }
+
+        /* criteria panel (for zero‑width info) */
+        .criteria-panel {
+            background: #f5faff;
+            border-radius: 28px;
+            padding: 1.5rem 1.8rem;
+            margin: 1.5rem 0;
+            border: 1px solid #dae8f5;
+        }
+        .criteria-panel h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f3b59;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .char-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .char-item {
+            background: white;
+            border-radius: 40px;
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #deeaf5;
+            font-size: 0.9rem;
+        }
+        .char-item .char {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #0b2b48;
+        }
+        .badge-extra {
+            background: #e1ebf7;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 12px;
+        }
+        .seo-content {
+            max-width: 800px !important;
+            width: 90% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* FAQ (exact same style) */
+        .faq-section {
+            max-width: 860px;
+            width: 100%;
+            margin-top: 2rem;
+            padding: 2rem 2rem 2.5rem;
+            border: 1px solid #d9e5f2;
+            border-radius: 2.5rem;
+            background: #ffffff;
+            box-shadow: 0 20px 35px -10px rgba(0,35,70,0.12), 0 5px 12px rgba(0,0,0,0.05);
+        }
+        .faq-section h2 {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            color: #0a1f31;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        .faq-item {
+            background: #f9fcff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.2rem 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1e3d60;
+            font-size: 1.05rem;
+            background: #ffffff;
+        }
+        .faq-question i {
+            transition: transform 0.3s;
+            color: #3f6ef0;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s;
+            background: #f9fcff;
+        }
+        .faq-answer p {
+            padding: 0 1.8rem 1.5rem;
+            color: #2c4c73;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 280px;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            color: #5c7797;
+            text-align: center;
+            border-top: 1px dashed #bfd3ea;
+            padding-top: 1.2rem;
+            margin-top: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="vault-card">
+        <!-- header -->
+        <div class="header-brand">
+            <div class="brand-icon">
+                <i class="fas fa-eye-slash"></i>
+            </div>
+            <div class="brand-text">
+                <h1>Invisible Text Generator</h1>
+                <div class="sub">
+                    zero‑width characters · hide messages in plain sight
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW BANNER: Facebook & Instagram promo -->
+        <div class="social-banner">
+            <div class="banner-icon-group">
+                <i class="fab fa-facebook fb-icon"></i>
+                <i class="fab fa-instagram ig-icon"></i>
+            </div>
+            <div class="banner-text">
+                <strong>Send invisible messages on Facebook & Instagram</strong>
+                <br></br>    <span>works in comments, DMs, bio</span>
+            </div>
+            <div class="banner-copy-demo" id="socialDemoBanner">
+                <span>👻 hidden “hello”</span>
+                <i class="fas fa-copy" id="copySocialDemo" title="copy invisible 'hello'"></i>
+            </div>
+        </div>
+
+        <!-- page tabs: encoder / decoder / inspector -->
+        <div class="page-tabs">
+            <button class="tab-btn active" data-page="encoder"><i class="fas fa-mask"></i> encoder</button>
+            <button class="tab-btn" data-page="decoder"><i class="fas fa-magnifying-glass"></i> decoder</button>
+            <button class="tab-btn" data-page="inspector"><i class="fas fa-chart-simple"></i> inspector</button>
+        </div>
+
+        <!-- pages container -->
+        <div class="page-container">
+            <!-- PAGE 1 – ENCODER: turn visible text into invisible string -->
+            <div class="page active-page" id="page-encoder">
+                <div class="input-field">
+                    <label for="visibleInput"><i class="far fa-keyboard"></i> visible message</label>
+                    <textarea id="visibleInput" rows="3" placeholder="e.g. secret message">Hello World</textarea>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>length</h4><div class="stat-value" id="visLen">
+                            11
+                        </div>
+                        <div class="stat-note">
+                            characters
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>words</h4><div class="stat-value" id="visWords">
+                            2
+                        </div>
+                        <div class="stat-note">
+                            visible
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>invisible</h4><div class="stat-value" id="zwCount">
+                            88
+                        </div>
+                        <div class="stat-note">
+                            chars after encode
+                        </div>
+                    </div>
+                </div>
+
+                <!-- encoding options -->
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <button class="btn-primary" id="encodeBtn"><i class="fas fa-code"></i> encode to invisible</button>
+                    <button class="btn-secondary" id="clearEncodeBtn"><i class="fas fa-undo-alt"></i> clear</button>
+                </div>
+
+                <!-- invisible result box -->
+                <label style="font-size:0.8rem; font-weight:600; color:#2a405e;">invisible output (copy this)</label>
+                <div class="generated-box" style="background:#14273f;">
+                    <span class="generated-password" id="invisibleOutput"></span>
+                    <button class="icon-btn" id="copyInvisBtn"><i class="far fa-clipboard"></i></button>
+                </div>
+
+                <!-- hint panel -->
+                <div class="criteria-panel" style="margin-top:1.2rem;">
+
+                    <div class="badge-extra">
+                        <i class="fas fa-info-circle"></i> each character becomes 8 invisible bits
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 2 – DECODER: extract hidden message from invisible string -->
+            <div class="page" id="page-decoder">
+                <div class="input-field">
+                    <label for="invisibleInput"><i class="fas fa-eye-slash"></i> paste invisible text</label>
+                    <textarea id="invisibleInput" rows="3" placeholder="Paste invisible characters here..."></textarea>
+                </div>
+                <div class="action-group">
+                    <button class="btn-primary" id="decodeBtn"><i class="fas fa-microscope"></i> decode hidden message</button>
+                    <button class="btn-secondary" id="clearDecodeBtn"><i class="fas fa-undo-alt"></i> clear</button>
+                </div>
+                <div style="margin-top:1.8rem;">
+                    <label style="font-size:0.8rem; font-weight:600; color:#2a405e;">decoded result</label>
+                    <div class="generated-box" style="background:#1f344b;">
+                        <span class="generated-password" id="decodedOutput">—</span>
+                        <button class="icon-btn" id="copyDecodeBtn"><i class="far fa-clipboard"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 3 – INSPECTOR: analyse invisible content -->
+            <div class="page" id="page-inspector">
+                <div class="input-field">
+                    <label for="inspectInput"><i class="fas fa-search"></i> text to inspect</label>
+                    <textarea id="inspectInput" rows="3" placeholder="Paste any text to analyze invisible characters..."></textarea>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>total chars</h4><div class="stat-value" id="inspectTotal">
+                            0
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>visible</h4><div class="stat-value" id="inspectVisible">
+                            0
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>zero‑width</h4><div class="stat-value" id="inspectZW">
+                            0
+                        </div>
+                    </div>
+                </div>
+                <div class="criteria-panel">
+                    <h3><i class="fas fa-list-ul"></i> zero‑width character breakdown</h3>
+                    <div class="char-list" id="zwBreakdown">
+                        <span class="badge-extra">no zero‑width chars</span>
+                    </div>
+                </div>
+                <div class="action-group">
+                    <button class="btn-secondary" id="stripZWbtn"><i class="fas fa-eraser"></i> strip zero‑width</button>
+                    <button class="btn-secondary" id="copyInspectBtn"><i class="fas fa-copy"></i> copy stripped</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footnote">
+            <i class="fas fa-lock"></i> all processing locally · invisible characters are real unicode
+        </div>
+    </div>
+    <section class="seo-content">
+
+        <h2>How to Send Blank Message on Instagram?</h2>
+        <p>
+            Many users want to send a blank message on Instagram just for fun or to surprise friends.
+            Normally, Instagram does not allow sending an empty message because the message box requires visible characters.
+        </p>
+
+        <p>
+            However, you can use invisible Unicode characters to bypass this restriction.
+        </p>
+
+        <h3>Steps to Send a Blank Message:</h3>
+        <ol>
+            <li>Open an Invisible Text Generator tool.</li>
+            <li>Click the <strong>Copy Invisible Text</strong> button.</li>
+            <li>Open Instagram.</li>
+            <li>Go to Direct Messages (DM).</li>
+            <li>Paste the invisible text.</li>
+            <li>Tap Send.</li>
+        </ol>
+
+        <p>
+            The message will appear blank, but technically it contains a hidden Unicode character.
+        </p>
+
+        <ul>
+            <li>Works in Instagram DMs</li>
+            <li>Works in Instagram Bio</li>
+            <li>May work in comments (depends on update)</li>
+        </ul>
+
+        <hr>
+
+        <h2>Invisible Text for Free Fire / BGMI Name</h2>
+        <p>
+            Gamers use invisible text to create stylish and unique nicknames in games like
+            Garena Free Fire and Battlegrounds Mobile India (BGMI).
+        </p>
+
+        <h3>Why Players Use Invisible Names:</h3>
+        <ul>
+            <li>Create stylish gap between letters</li>
+            <li>Make partially invisible names</li>
+            <li>Stand out in leaderboard</li>
+            <li>Hide certain characters</li>
+        </ul>
+
+        <p>
+            <strong>Example Format:</strong>
+        </p>
+        <pre>PROㅤGAMER</pre>
+
+        <p>
+            The space between words contains an invisible Unicode character.
+        </p>
+
+        <hr>
+
+        <h2>Is Invisible Text Safe?</h2>
+        <p>
+            Yes, invisible text is safe because it uses standard Unicode characters supported by devices and browsers.
+        </p>
+
+        <ul>
+            <li>Does not contain malware</li>
+            <li>Does not hack accounts</li>
+            <li>Does not damage devices</li>
+        </ul>
+
+        <p>
+            Invisible characters are simply characters that do not display visually.
+        </p>
+
+        <hr>
+
+        <h2>Unicode Invisible Characters List</h2>
+
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Unicode</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Zero Width Space</td>
+                    <td>U+200B</td>
+                    <td>Adds invisible spacing</td>
+                </tr>
+                <tr>
+                    <td>Zero Width Non-Joiner</td>
+                    <td>U+200C</td>
+                    <td>Prevents character joining</td>
+                </tr>
+                <tr>
+                    <td>Zero Width Joiner</td>
+                    <td>U+200D</td>
+                    <td>Joins characters invisibly</td>
+                </tr>
+                <tr>
+                    <td>Word Joiner</td>
+                    <td>U+2060</td>
+                    <td>Prevents line breaks</td>
+                </tr>
+                <tr>
+                    <td>Invisible Separator</td>
+                    <td>U+2063</td>
+                    <td>Hidden separator</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+<div class="vault-card" style="margin-top: 3rem; background: #ffffff; border: 1px solid #d0e2f5; padding: 20px; border-radius: 2rem;">
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem;">
+        
+        <div style="width: 150px; height: 150px; position: relative;">
+            <img src="HAPPY-JI-KI-IMG.jpg" 
+                 alt="Happy Sagar" 
+                 style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid #f0f7ff; box-shadow: 0 10px 20px rgba(0,0,0,0.1);"
+                 onerror="this.src='https://ui-avatars.com/api/?name=Happy+Sagar&background=0a1b30&color=fff&size=150'">
+            </div>
+
+        <div style="width: 100%;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #0a1f31; margin-bottom: 10px;">About the Developer</h2>
+            <p style="font-size: 1rem; color: #1e3d60; font-weight: 600; margin-bottom: 10px;">Hello, I am Happy Sagar.</p>
+            <p style="font-size: 0.9rem; color: #46648b; line-height: 1.6; margin-bottom: 15px;">
+               I work on digital tools and online content. My aim is simple: to create useful information and tools that help people navigate their digital lives more effectively.
+            </p>
+            <p style="font-size: 0.95rem; color: #46648b; line-height: 1.6; margin-top: 0.8rem;">
+                I developed this tool for those who want to send <strong>invisible comments</strong> or messages on Instagram, Facebook, and other social media platforms. Additionally, this site allows you to decode and see those invisible messages in a <strong>'visible'</strong> form.
+            </p>
+            
+            <div style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: #f0f7ff; border-radius: 30px;">
+                <i class="fas fa-envelope" style="color: #3f6ef0;"></i>
+                <a href="mailto:mytexttools1@gmail.com" style="text-decoration: none; color: #0a263c; font-weight: 600; font-size: 0.9rem;">
+                    mytexttools1@gmail.com
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <!-- FAQ SECTION --><section class="faq-section">
+        <h2>Invisible Text — Frequently Asked</h2>
+        <div class="faq-container">
+            <div class="faq-item active">
+                <div class="faq-question">
+                    1. What exactly is "invisible text"? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        It uses Unicode zero-width characters (U+200B and U+200C) that are non-printing. These characters occupy no physical space on the screen, but computers still recognize them as data, allowing you to hide information in plain sight.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    2. How does the encoding process work? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Each character of your message is converted into 8-bit binary. Our tool then replaces every '0' with a Zero-Width Space and every '1' with a Zero-Width Non-Joiner to create the invisible string.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    3. Where can I use this invisible text? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Since these are standard Unicode characters, they work in Facebook and Instagram comments, DMs, and bios. They are also useful for creating "blank" usernames in games or Discord messages that appear empty.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    4. Is my hidden data safe and private? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Absolutely. All encoding and decoding happens locally in your browser. No data is sent to a server, and there is no tracking or data collection involved in the process.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    5. Why did my hidden message disappear? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Some platforms, like Twitter, may automatically strip zero-width characters to prevent spam. If the decoder shows no message, the platform likely removed the invisible characters during transmission.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    6. What is the "Inspector" tab used for? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        The Inspector analyzes text to find hidden characters. It provides a breakdown of total, visible, and zero-width characters, and allows you to strip them out to ensure your text is clean.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        (function() {
+            // Zero-width characters
+            const ZW = {
+                ZWSP: '\u200B', // zero width space (binary 0)
+                ZWNJ: '\u200C' // zero width non-joiner (binary 1)
+            };
+
+            // ========== ENCODER FUNCTIONS ==========
+
+            // Convert text to binary string (8 bits per character)
+            function textToBinary(str) {
+                let binary = '';
+                for (let i = 0; i < str.length; i++) {
+                    let code = str.charCodeAt(i);
+                    let bin = code.toString(2);
+                    // Pad with leading zeros to make 8 bits
+                    bin = '0'.repeat(8 - bin.length) + bin;
+                    binary += bin;
+                }
+                return binary;
+            }
+
+            // Convert binary string back to text
+            function binaryToText(binary) {
+                let text = '';
+                // Process 8 bits at a time
+                for (let i = 0; i < binary.length; i += 8) {
+                    let byte = binary.substr(i, 8);
+                    if (byte.length < 8) break;
+                    let code = parseInt(byte, 2);
+                    text += String.fromCharCode(code);
+                }
+                return text;
+            }
+
+            // Encode visible text to invisible (zero-width) characters
+            function encodeToInvisible(visible) {
+                if (!visible) return '';
+                let binary = textToBinary(visible);
+                let invisible = '';
+                for (let bit of binary) {
+                    invisible += bit === '0' ? ZW.ZWSP: ZW.ZWNJ;
+                }
+                return invisible;
+            }
+
+            // Decode invisible characters back to visible text
+            function decodeFromInvisible(invisible) {
+                if (!invisible) return '';
+
+                // Extract only zero-width characters and convert to bits
+                let bits = '';
+                for (let char of invisible) {
+                    if (char === ZW.ZWSP) bits += '0';
+                    else if (char === ZW.ZWNJ) bits += '1';
+                    // Ignore any visible characters
+                }
+
+                if (bits.length === 0) return '';
+                if (bits.length % 8 !== 0) {
+                    console.warn('Binary length not multiple of 8');
+                    return '';
+                }
+
+                return binaryToText(bits);
+            }
+
+            // ========== DOM Elements ==========
+
+            // Encoder elements
+            const visibleInput = document.getElementById('visibleInput');
+            const visLen = document.getElementById('visLen');
+            const visWords = document.getElementById('visWords');
+            const zwCount = document.getElementById('zwCount');
+            const invisibleOutput = document.getElementById('invisibleOutput');
+            const encodeBtn = document.getElementById('encodeBtn');
+            const clearEncodeBtn = document.getElementById('clearEncodeBtn');
+            const copyInvisBtn = document.getElementById('copyInvisBtn');
+
+            // Decoder elements
+            const invisibleInput = document.getElementById('invisibleInput');
+            const decodeBtn = document.getElementById('decodeBtn');
+            const clearDecodeBtn = document.getElementById('clearDecodeBtn');
+            const decodedOutput = document.getElementById('decodedOutput');
+            const copyDecodeBtn = document.getElementById('copyDecodeBtn');
+
+            // Inspector elements
+            const inspectInput = document.getElementById('inspectInput');
+            const inspectTotal = document.getElementById('inspectTotal');
+            const inspectVisible = document.getElementById('inspectVisible');
+            const inspectZW = document.getElementById('inspectZW');
+            const zwBreakdown = document.getElementById('zwBreakdown');
+            const stripZWbtn = document.getElementById('stripZWbtn');
+            const copyInspectBtn = document.getElementById('copyInspectBtn');
+
+            // ========== Event Listeners ==========
+
+            // Update encoder stats
+            function updateEncoderStats() {
+                let txt = visibleInput.value;
+                visLen.innerText = txt.length;
+
+                // Count words
+                let wordCount = 0;
+                if (txt.trim()) {
+                    wordCount = txt.trim().split(/\s+/).length;
+                }
+                visWords.innerText = wordCount;
+
+                // Show estimated invisible chars (8 per visible char)
+                zwCount.innerText = txt.length * 8;
+            }
+
+            visibleInput.addEventListener('input', updateEncoderStats);
+
+            // Encode button
+            encodeBtn.addEventListener('click', () => {
+                let visible = visibleInput.value;
+                let invisible = encodeToInvisible(visible);
+                invisibleOutput.innerText = invisible || '(empty)';
+            });
+
+            // Clear encoder
+            clearEncodeBtn.addEventListener('click', () => {
+                visibleInput.value = '';
+                invisibleOutput.innerText = '';
+                updateEncoderStats();
+            });
+
+            // Copy invisible text
+            copyInvisBtn.addEventListener('click', () => {
+                let txt = invisibleOutput.innerText;
+                if (txt && txt !== '(empty)') {
+                    navigator.clipboard.writeText(txt).then(() => {
+                        copyInvisBtn.innerHTML = '<i class="fas fa-check"></i>';
+                        setTimeout(() => copyInvisBtn.innerHTML = '<i class="far fa-clipboard"></i>', 1200);
+                    });
+                }
+            });
+
+            // Decode button
+            decodeBtn.addEventListener('click',
+                () => {
+                    let invisible = invisibleInput.value;
+                    let decoded = decodeFromInvisible(invisible);
+                    decodedOutput.innerText = decoded || '(no valid hidden message)';
+                });
+
+            // Clear decoder
+            clearDecodeBtn.addEventListener('click',
+                () => {
+                    invisibleInput.value = '';
+                    decodedOutput.innerText = '—';
+                });
+
+            // Copy decoded text
+            copyDecodeBtn.addEventListener('click',
+                () => {
+                    let txt = decodedOutput.innerText;
+                    if (txt && txt !== '—' && txt !== '(no valid hidden message)') {
+                        navigator.clipboard.writeText(txt).then(() => {
+                            copyDecodeBtn.innerHTML = '<i class="fas fa-check"></i>';
+                            setTimeout(() => copyDecodeBtn.innerHTML = '<i class="far fa-clipboard"></i>', 1200);
+                        });
+                    }
+                });
+
+            // Inspector functions
+            function updateInspector() {
+                let txt = inspectInput.value;
+                let total = txt.length;
+                let visibleCount = 0;
+                let zwCount = 0;
+                let zwMap = {
+                    '\u200B': 0, '\u200C': 0
+                };
+
+                for (let char of txt) {
+                    if (char === ZW.ZWSP) {
+                        zwCount++;
+                        zwMap[ZW.ZWSP]++;
+                    } else if (char === ZW.ZWNJ) {
+                        zwCount++;
+                        zwMap[ZW.ZWNJ]++;
+                    } else {
+                        visibleCount++;
+                    }
+                }
+
+                inspectTotal.innerText = total;
+                inspectVisible.innerText = visibleCount;
+                inspectZW.innerText = zwCount;
+
+                // Build breakdown
+                let html = '';
+                if (zwCount === 0) {
+                    html = '<span class="badge-extra">no zero‑width chars</span>';
+                } else {
+                    if (zwMap[ZW.ZWSP] > 0) {
+                        html += `<div class="char-item"><span class="char">​</span>ZWSP: ${zwMap[ZW.ZWSP]}</div>`;
+                    }
+                    if (zwMap[ZW.ZWNJ] > 0) {
+                        html += `<div class="char-item"><span class="char">‌</span>ZWNJ: ${zwMap[ZW.ZWNJ]}</div>`;
+                    }
+                }
+                zwBreakdown.innerHTML = html;
+            }
+
+            inspectInput.addEventListener('input', updateInspector);
+
+            // Strip zero-width characters
+            stripZWbtn.addEventListener('click', () => {
+                let txt = inspectInput.value;
+                let stripped = txt.replace(/[\u200B\u200C]/g, '');
+                inspectInput.value = stripped;
+                updateInspector();
+            });
+
+            // Copy stripped text
+            copyInspectBtn.addEventListener('click', () => {
+                let txt = inspectInput.value.replace(/[\u200B\u200C]/g, '');
+                navigator.clipboard.writeText(txt).then(() => {
+                    copyInspectBtn.innerHTML = '<i class="fas fa-check"></i> copied';
+                    setTimeout(() => copyInspectBtn.innerHTML = '<i class="fas fa-copy"></i> copy stripped', 1200);
+                });
+            });
+
+            // ========== Tab switching ==========
+            const tabs = document.querySelectorAll('.tab-btn');
+            const pages = document.querySelectorAll('.page');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    let target = tab.dataset.page;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    pages.forEach(p => p.classList.remove('active-page'));
+                    document.getElementById('page-' + target).classList.add('active-page');
+
+                    // Refresh inspector when switching to that tab
+                    if (target === 'inspector') {
+                        updateInspector();
+                    }
+                });
+            });
+
+            // ========== FAQ accordion ==========
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click',
+                    () => {
+                        item.classList.toggle('active');
+                    });
+            });
+
+            // ========== BANNER COPY (invisible "hello") ==========
+            const copySocialDemo = document.getElementById('copySocialDemo');
+            const socialDemoBanner = document.getElementById('socialDemoBanner');
+            // invisible version of "hello"
+            const invisibleHello = encodeToInvisible('hello');
+
+            copySocialDemo.addEventListener('click', () => {
+                navigator.clipboard.writeText(invisibleHello).then(() => {
+                    let originalHtml = copySocialDemo.innerHTML;
+                    copySocialDemo.innerHTML = '<i class="fas fa-check"></i>';
+                    setTimeout(() => copySocialDemo.innerHTML = originalHtml, 1200);
+                });
+            });
+
+            // ========== Initialize ==========
+            // Set initial encoder stats
+            updateEncoderStats();
+
+            // Encode default message
+            invisibleOutput.innerText = encodeToInvisible(visibleInput.value);
+
+            // Set placeholder for decoder with example
+            let example = encodeToInvisible('secret');
+            invisibleInput.placeholder = example + ' (paste or try this)';
+
+            // Initialize inspector
+            updateInspector();
+
+            // Prefill inspector with a fun example (visible + invisible)
+            inspectInput.value = "Check this out: 👋" + invisibleHello + " (can you see?)";
+            updateInspector();
+
+        })();
+    </script>
+</body>
+</html>
