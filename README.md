@@ -726,7 +726,7 @@
     <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem;">
         
         <div style="width: 150px; height: 150px; position: relative;">
-<img src="h.jpg" alt="Invisible Text Generator Image">
+<img src="ha.jpg" alt="Invisible Text Generator">
 </div>
 
         <div style="width: 100%;">
