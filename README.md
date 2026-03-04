@@ -456,7 +456,10 @@
         <!-- header -->
         <div class="header-brand">
             <div class="brand-icon">
-                <i class="fas fa-eye-slash"></i>
+    <img src="8f8654bf-608f-49e9-bacd-ecd46f71da1e.jpg" 
+     alt="Invisible Text Generator" 
+     style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+                <h1>Invisible Text Generator</h1>
             </div>
             <div class="brand-text">
                 <h1>Invisible Text Generator</h1>
