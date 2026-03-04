@@ -729,7 +729,6 @@
             <img src=""C:\Users\user\Downloads\HAPPY-JI-KI-IMG.jpg""></img> 
                  alt="Happy Sagar" 
                  style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid #f0f7ff; box-shadow: 0 10px 20px rgba(0,0,0,0.1);"
-                 onerror="this.src='https://ui-avatars.com/api/?name=Happy+Sagar&background=0a1b30&color=fff&size=150'">
             </div>
 
         <div style="width: 100%;">
