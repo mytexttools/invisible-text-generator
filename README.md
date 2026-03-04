@@ -462,7 +462,6 @@
                 <h1>Invisible Text Generator</h1>
             </div>
             <div class="brand-text">
-                <h1>Invisible Text Generator</h1>
                 <div class="sub">
                     zero‑width characters · hide messages in plain sight
                 </div>
