@@ -726,8 +726,7 @@
     <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem;">
         
         <div style="width: 150px; height: 150px; position: relative;">
-            <img src=""C:\Users\user\Downloads\h.jpg"">
-            </div>
+![image alt](https://github.com/mytexttools/invisible-text-generator/blob/main/h.jpg?raw=true)            </div>
 
         <div style="width: 100%;">
             <h2 style="font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #0a1f31; margin-bottom: 10px;">About the Developer</h2>
