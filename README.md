@@ -474,7 +474,7 @@
             </div>
             <div class="banner-text">
                 <strong>Send invisible messages on Facebook & Instagram</strong>
-                <br></br>    <span>works in comments, DMs, bio</span>
+                <br>    <span>works in comments, DMs, bio</span>
             </div>
             <div class="banner-copy-demo" id="socialDemoBanner">
                 <span>👻 hidden “hello”</span>
