@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,8 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
-            margin: 0;
-            padding: 0;
+            margin: 10px;
+            padding: 10px;
             box-sizing: border-box;
         }
 
@@ -33,15 +32,15 @@
             box-shadow: 0 30px 60px -20px rgba(0,20,40,0.3), 0 10px 20px -8px rgba(0,0,0,0.2);
             padding: 2.2rem 2.2rem 2rem;
             border: 1px solid rgba(255,255,255,0.8);
-            margin: 0 auto 2rem;
+            margin: 0 auto 0rem;
         }
 
         /* header with brand icon */
         .header-brand {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
+            gap: 0rem;
+            margin-bottom: 0rem;
         }
         .brand-icon {
             background: linear-gradient(150deg, #17273f, #0a1b30);
@@ -451,752 +450,906 @@
         }
     </style>
 </head>
-<body>
-    <div class="vault-card">
-        <!-- header -->
-        <div class="header-brand">
-            <div class="brand-icon">
-<img src="8f8654bf-608f-49e9-bacd-ecd46f71da1e.jpg" 
-     alt="Invisible Text Generator" 
-     style="width: 100px; height: 100px; border-radius: 50%; object-fit: contain;">        
-            </div>
-            <div class="brand-text">
-                <h1>Invisible Text Generator</h1>
-                <div class="sub">
-                    zero‑width characters · hide messages in plain sight
-                </div>
-            </div>
-        </div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invisible Text Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-        <!-- NEW BANNER: Facebook & Instagram promo -->
-        <div class="social-banner">
-            <div class="banner-icon-group">
-                <i class="fab fa-facebook fb-icon"></i>
-                <i class="fab fa-instagram ig-icon"></i>
-            </div>
-            <div class="banner-text">
-                <strong>Send invisible messages on Facebook & Instagram</strong>
-                <br></br>   <span>works in comments, DMs, bio</span>
-            </div>
-            <div class="banner-copy-demo" id="socialDemoBanner">
-                <span>👻 hidden “hello”</span>
-                <i class="fas fa-copy" id="copySocialDemo" title="copy invisible 'hello'"></i>
-            </div>
-        </div>
+<style>
+    /* --- CSS START --- */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+    }
 
-        <!-- page tabs: encoder / decoder / inspector -->
-        <div class="page-tabs">
-            <button class="tab-btn active" data-page="encoder"><i class="fas fa-mask"></i> encoder</button>
-            <button class="tab-btn" data-page="decoder"><i class="fas fa-magnifying-glass"></i> decoder</button>
-            <button class="tab-btn" data-page="inspector"><i class="fas fa-chart-simple"></i> inspector</button>
-        </div>
+    body {
+        background-color: #f4f7f6;
+    }
 
-        <!-- pages container -->
-        <div class="page-container">
-            <!-- PAGE 1 – ENCODER: turn visible text into invisible string -->
-            <div class="page active-page" id="page-encoder">
-                <div class="input-field">
-                    <label for="visibleInput"><i class="far fa-keyboard"></i> visible message</label>
-                    <textarea id="visibleInput" rows="3" placeholder="e.g. secret message">Hello World</textarea>
-                </div>
+    /* Fixed Header Styling */
+    .header-wrapper {
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+    }
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h4>length</h4><div class="stat-value" id="visLen">
-                            11
-                        </div>
-                        <div class="stat-note">
-                            characters
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>words</h4><div class="stat-value" id="visWords">
-                            2
-                        </div>
-                        <div class="stat-note">
-                            visible
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>invisible</h4><div class="stat-value" id="zwCount">
-                            88
-                        </div>
-                        <div class="stat-note">
-                            chars after encode
-                        </div>
-                    </div>
-                </div>
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* Side padding pixels mein rakhi hai taaki width control mein rahe */
+        padding: 15px 30px;
+        max-width: 1300px;
+        /* Header isse zyada nahi phailega */
+        margin: 0 auto;
+        /* Screen ke center mein rakhega */
+    }
 
-                <!-- encoding options -->
-                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
-                    <button class="btn-primary" id="encodeBtn"><i class="fas fa-code"></i> encode to invisible</button>
-                    <button class="btn-secondary" id="clearEncodeBtn"><i class="fas fa-undo-alt"></i> clear</button>
-                </div>
+    .logo {
+        font-size: 1.6rem;
+        /* Perfectly balanced size */
+        font-weight: 800;
+        color: #1a1a1a;
+        text-decoration: none;
+        letter-spacing: 1.5px;
+        white-space: nowrap;
+    }
 
-                <!-- invisible result box -->
-                <label style="font-size:0.8rem; font-weight:600; color:#2a405e;">invisible output (copy this)</label>
-                <div class="generated-box" style="background:#14273f;">
-                    <span class="generated-password" id="invisibleOutput"></span>
-                    <button class="icon-btn" id="copyInvisBtn"><i class="far fa-clipboard"></i></button>
-                </div>
+    .logo span {
+        color: #2563eb;
+    }
 
-                <!-- hint panel -->
-                <div class="criteria-panel" style="margin-top:1.2rem;">
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 25px;
+        /* Links ke beech ka gap */
+    }
 
-                    <div class="badge-extra">
-                        <i class="fas fa-info-circle"></i> each character becomes 8 invisible bits
-                    </div>
-                </div>
-            </div>
+    .nav-link {
+        text-decoration: none;
+        color: #4b5563;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: 0.3s;
+    }
 
-            <!-- PAGE 2 – DECODER: extract hidden message from invisible string -->
-            <div class="page" id="page-decoder">
-                <div class="input-field">
-                    <label for="invisibleInput"><i class="fas fa-eye-slash"></i> paste invisible text</label>
-                    <textarea id="invisibleInput" rows="3" placeholder="Paste invisible characters here..."></textarea>
-                </div>
-                <div class="action-group">
-                    <button class="btn-primary" id="decodeBtn"><i class="fas fa-microscope"></i> decode hidden message</button>
-                    <button class="btn-secondary" id="clearDecodeBtn"><i class="fas fa-undo-alt"></i> clear</button>
-                </div>
-                <div style="margin-top:1.8rem;">
-                    <label style="font-size:0.8rem; font-weight:600; color:#2a405e;">decoded result</label>
-                    <div class="generated-box" style="background:#1f344b;">
-                        <span class="generated-password" id="decodedOutput">—</span>
-                        <button class="icon-btn" id="copyDecodeBtn"><i class="far fa-clipboard"></i></button>
-                    </div>
-                </div>
-            </div>
+    .nav-link:hover {
+        color: #2563eb;
+    }
 
-            <!-- PAGE 3 – INSPECTOR: analyse invisible content -->
-            <div class="page" id="page-inspector">
-                <div class="input-field">
-                    <label for="inspectInput"><i class="fas fa-search"></i> text to inspect</label>
-                    <textarea id="inspectInput" rows="3" placeholder="Paste any text to analyze invisible characters..."></textarea>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h4>total chars</h4><div class="stat-value" id="inspectTotal">
-                            0
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>visible</h4><div class="stat-value" id="inspectVisible">
-                            0
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>zero‑width</h4><div class="stat-value" id="inspectZW">
-                            0
-                        </div>
-                    </div>
-                </div>
-                <div class="criteria-panel">
-                    <h3><i class="fas fa-list-ul"></i> zero‑width character breakdown</h3>
-                    <div class="char-list" id="zwBreakdown">
-                        <span class="badge-extra">no zero‑width chars</span>
-                    </div>
-                </div>
-                <div class="action-group">
-                    <button class="btn-secondary" id="stripZWbtn"><i class="fas fa-eraser"></i> strip zero‑width</button>
-                    <button class="btn-secondary" id="copyInspectBtn"><i class="fas fa-copy"></i> copy stripped</button>
-                </div>
-            </div>
-        </div>
+    .nav-link.active {
+        color: #2563eb;
+        font-weight: 600;
+    }
 
-        <div class="footnote">
-            <i class="fas fa-lock"></i> all processing locally · invisible characters are real unicode
-        </div>
-    </div>
-    <section class="seo-content">
+    .cta-btn {
+        background-color: #2563eb;
+        color: #ffffff;
+        padding: 9px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: capitalize;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
 
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --text-color: #333;
-            --bg-color: #f9f9f9;
+    .cta-btn:hover {
+        background-color: #1d4ed8;
+        box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 850px) {
+        .nav-menu {
+            display: none;
+            /* Mobile par menu hide ho jayega */
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
-        }
-
-        .article-container {
-            max-width: 125%;
-            margin: 0 auto;
-            background: #fff;
-            padding: 90px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        h1 {
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            border-bottom: 3px solid var(--accent-color);
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            color: var(--primary-color);
-            font-size: 1.6rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-
-        p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .highlight-box {
-            background-color: #eef7fd;
-            border-left: 5px solid var(--accent-color);
+        .header {
             padding: 15px 20px;
-            margin: 25px 0;
-            font-style: italic;
         }
+        .logo {
+            font-size: 1.3rem;
+        }
+    }
+    /* --- CSS END --- */
+</style>
+</head>
+<body>
 
-        ul, ol {
-            margin-bottom: 20px;
-            padding-left: 25px;
-        }
+<div class="header-wrapper">
+<header class="header">
+<a href="index.html" class="logo">invisible text <span>generator</span></a>
 
-        li {
-            margin-bottom: 10px;
-            font-size: 1.05rem;
-        }
+<nav>
+<ul class="nav-menu">
+<li><a href="file:///C:/Users/user/AppData/Local/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalState/sessions/6621167AE980B1F17ED3F89EFB677A7F0AABADED/transfers/2026-11/invsble%20txt%20gen2%20(1).html#" class="nav-link active">Home</a></li>
+<li><a href="file:///C:/Users/user/Downloads/blog%20header.html" class="nav-link">How to use</a></li>
+<li><a href="file:///C:/Users/user/Downloads/aboutus.html" class="nav-link">About us</a></li>
+</ul>
+</nav>
 
-        .step-list {
-            list-style: none;
-            padding: 0;
-        }
+<div class="btn-container">
+<a href="blog.html" class="cta-btn">blog</a>
+</div>
+</header>
+</div>
 
-        .step-list li {
-            background: #f1f1f1;
-            margin: 10px 0;
-            padding: 12px 15px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-        }
 
-        .step-list li::before {
-            content: "✓";
-            color: #27ae60;
-            font-weight: bold;
-            margin-right: 15px;
-        }
+<div class="vault-card">
+<!-- header -->
+<div class="header-brand">
+<div class="brand-icon">
+<img src="8f8654bf-608f-49e9-bacd-ecd46f71da1e.jpg"
+alt="Invisible Text Generator"
+style="width: 100px; height: 100px; border-radius: 50%; object-fit: contain;">
+</div>
+<div class="brand-text">
+<h1>Invisible Text Generator</h1>
+<div class="sub">
+zero‑width characters · hide messages in plain sight
+</div>
+</div>
+</div>
 
-        @media (max-width: 600px) {
-            .article-container {
-                padding: 20px;
-            }
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.4rem; }
-        }
-    </style>
+<!-- NEW BANNER: Facebook & Instagram promo -->
+<div class="social-banner">
+<div class="banner-icon-group">
+<i class="fab fa-facebook fb-icon"></i>
+<i class="fab fa-instagram ig-icon"></i>
+</div>
+<div class="banner-text">
+<strong>Send invisible messages on Facebook & Instagram</strong>
+<br></br>   <span>works in comments, DMs, bio</span>
+</div>
+<div class="banner-copy-demo" id="socialDemoBanner">
+<span>👻 hidden “hello”</span>
+<i class="fas fa-copy" id="copySocialDemo" title="copy invisible 'hello'"></i>
+</div>
+</div>
+
+<!-- page tabs: encoder / decoder / inspector -->
+<div class="page-tabs">
+<button class="tab-btn active" data-page="encoder"><i class="fas fa-mask"></i> encoder</button>
+<button class="tab-btn" data-page="decoder"><i class="fas fa-magnifying-glass"></i> decoder</button>
+<button class="tab-btn" data-page="inspector"><i class="fas fa-chart-simple"></i> inspector</button>
+</div>
+
+<!-- pages container -->
+<div class="page-container">
+<!-- PAGE 1 – ENCODER: turn visible text into invisible string -->
+<div class="page active-page" id="page-encoder">
+<div class="input-field">
+<label for="visibleInput"><i class="far fa-keyboard"></i> visible message</label>
+<textarea id="visibleInput" rows="3" placeholder="e.g. secret message">Hello World</textarea>
+</div>
+
+<div class="stats-grid">
+<div class="stat-card">
+<h4>length</h4><div class="stat-value" id="visLen">
+11
+</div>
+<div class="stat-note">
+characters
+</div>
+</div>
+<div class="stat-card">
+<h4>words</h4><div class="stat-value" id="visWords">
+2
+</div>
+<div class="stat-note">
+visible
+</div>
+</div>
+<div class="stat-card">
+<h4>invisible</h4><div class="stat-value" id="zwCount">
+88
+</div>
+<div class="stat-note">
+chars after encode
+</div>
+</div>
+</div>
+
+<!-- encoding options -->
+<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
+<button class="btn-primary" id="encodeBtn"><i class="fas fa-code"></i> encode to invisible</button>
+<button class="btn-secondary" id="clearEncodeBtn"><i class="fas fa-undo-alt"></i> clear</button>
+</div>
+
+<!-- invisible result box -->
+<label style="font-size:0.8rem; font-weight:600; color:#2a405e;">invisible output (copy this)</label>
+<div class="generated-box" style="background:#14273f;">
+<span class="generated-password" id="invisibleOutput"></span>
+<button class="icon-btn" id="copyInvisBtn"><i class="far fa-clipboard"></i></button>
+</div>
+
+<!-- hint panel -->
+<div class="criteria-panel" style="margin-top:1.2rem;">
+
+<div class="badge-extra">
+<i class="fas fa-info-circle"></i> each character becomes 8 invisible bits
+</div>
+</div>
+</div>
+
+<!-- PAGE 2 – DECODER: extract hidden message from invisible string -->
+<div class="page" id="page-decoder">
+<div class="input-field">
+<label for="invisibleInput"><i class="fas fa-eye-slash"></i> paste invisible text</label>
+<textarea id="invisibleInput" rows="3" placeholder="Paste invisible characters here..."></textarea>
+</div>
+<div class="action-group">
+<button class="btn-primary" id="decodeBtn"><i class="fas fa-microscope"></i> decode hidden message</button>
+<button class="btn-secondary" id="clearDecodeBtn"><i class="fas fa-undo-alt"></i> clear</button>
+</div>
+<div style="margin-top:1.8rem;">
+<label style="font-size:0.8rem; font-weight:600; color:#2a405e;">decoded result</label>
+<div class="generated-box" style="background:#1f344b;">
+<span class="generated-password" id="decodedOutput">—</span>
+<button class="icon-btn" id="copyDecodeBtn"><i class="far fa-clipboard"></i></button>
+</div>
+</div>
+</div>
+
+<!-- PAGE 3 – INSPECTOR: analyse invisible content -->
+<div class="page" id="page-inspector">
+<div class="input-field">
+<label for="inspectInput"><i class="fas fa-search"></i> text to inspect</label>
+<textarea id="inspectInput" rows="3" placeholder="Paste any text to analyze invisible characters..."></textarea>
+</div>
+<div class="stats-grid">
+<div class="stat-card">
+<h4>total chars</h4><div class="stat-value" id="inspectTotal">
+0
+</div>
+</div>
+<div class="stat-card">
+<h4>visible</h4><div class="stat-value" id="inspectVisible">
+0
+</div>
+</div>
+<div class="stat-card">
+<h4>zero‑width</h4><div class="stat-value" id="inspectZW">
+0
+</div>
+</div>
+</div>
+<div class="criteria-panel">
+<h3><i class="fas fa-list-ul"></i> zero‑width character breakdown</h3>
+<div class="char-list" id="zwBreakdown">
+<span class="badge-extra">no zero‑width chars</span>
+</div>
+</div>
+<div class="action-group">
+<button class="btn-secondary" id="stripZWbtn"><i class="fas fa-eraser"></i> strip zero‑width</button>
+<button class="btn-secondary" id="copyInspectBtn"><i class="fas fa-copy"></i> copy stripped</button>
+</div>
+</div>
+</div>
+
+<div class="footnote">
+<i class="fas fa-lock"></i> all processing locally · invisible characters are real unicode
+</div>
+</div>
+<section class="seo-content">
+
+<style>
+:root {
+--primary-color: #2c3e50;
+--accent-color: #3498db;
+--text-color: #333;
+--bg-color: #f9f9f9;
+}
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+line-height: 1.6;
+color: var(--text-color);
+background-color: var(--bg-color);
+margin: 0;
+padding: 20px;
+}
+
+.article-container {
+max-width: 125%;
+margin: 0 auto;
+background: #fff;
+padding: 90px;
+border-radius: 12px;
+box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+h1 {
+color: var(--primary-color);
+font-size: 2.2rem;
+border-bottom: 3px solid var(--accent-color);
+padding-bottom: 10px;
+margin-bottom: 30px;
+}
+
+h2 {
+color: var(--primary-color);
+font-size: 1.6rem;
+margin-top: 30px;
+margin-bottom: 15px;
+}
+
+p {
+margin-bottom: 20px;
+font-size: 1.1rem;
+}
+
+.highlight-box {
+background-color: #eef7fd;
+border-left: 5px solid var(--accent-color);
+padding: 15px 20px;
+margin: 25px 0;
+font-style: italic;
+}
+
+ul, ol {
+margin-bottom: 20px;
+padding-left: 25px;
+}
+
+li {
+margin-bottom: 10px;
+font-size: 1.05rem;
+}
+
+.step-list {
+list-style: none;
+padding: 0;
+}
+
+.step-list li {
+background: #f1f1f1;
+margin: 10px 0;
+padding: 12px 15px;
+border-radius: 6px;
+display: flex;
+align-items: center;
+}
+
+.step-list li::before {
+content: "✓";
+color: #27ae60;
+font-weight: bold;
+margin-right: 15px;
+}
+
+@media (max-width: 600px) {
+.article-container {
+padding: 20px;
+}
+h1 {
+font-size: 1.8rem;
+}
+h2 {
+font-size: 1.4rem;
+}
+}
+</style>
 </head>
 <body>
 
 <div class="article-container">
-    <h2>Invisible Text Generator – Create Blank Text Instantly</h2>
+<h2>Invisible Text Generator – Create Blank Text Instantly</h2>
 
-    <p>The Invisible Text Generator is a cool online tool. It helps people make hidden text. This is done using characters that you cannot see. These characters are there, but you cannot see them with your eyes. So the text looks totally empty even though it still has "stuff" in it.</p>
+<p>
+The Invisible Text Generator is a cool online tool. It helps people make hidden text. This is done using characters that you cannot see. These characters are there, but you cannot see them with your eyes. So the text looks totally empty even though it still has "stuff" in it.
+</p>
 
-    <h2>What is an Invisible Text Generator?</h2>
-    <p>An invisible text generator is a tool that makes characters that are invisible. You can still copy and paste them. They come from the <strong>Unicode system</strong>. This system lets people make text that looks blank. A blank text generator turns these characters into text that looks empty, but it still works like normal text when you use it on apps and websites.</p>
+<h2>What is an Invisible Text Generator?</h2>
+<p>
+An invisible text generator is a tool that makes characters that are invisible. You can still copy and paste them. They come from the <strong>Unicode system</strong>. This system lets people make text that looks blank. A blank text generator turns these characters into text that looks empty, but it still works like normal text when you use it on apps and websites.
+</p>
 
-    <div class="highlight-box">
-        Unicode characters like the "Zero-width space" allow text to exist without being visible on the screen.
-    </div>
+<div class="highlight-box">
+Unicode characters like the "Zero-width space" allow text to exist without being visible on the screen.
+</div>
 
-    <h2>How a Blank Text Generator Works</h2>
-    <p>A blank text generator uses specific characters instead of regular letters or spaces. These characters work like text, but you cannot see them on the screen. When you use a character generator, it makes hidden characters that you can paste anywhere you want. This lets you copy and paste text that the system understands, but remains invisible to the user.</p>
+<h2>How a Blank Text Generator Works</h2>
+<p>
+A blank text generator uses specific characters instead of regular letters or spaces. These characters work like text, but you cannot see them on the screen. When you use a character generator, it makes hidden characters that you can paste anywhere you want. This lets you copy and paste text that the system understands, but remains invisible to the user.
+</p>
 
-    <h2>Sending Blank Messages Online</h2>
-    <p>One of the popular things people use invisible text tools for is sending blank messages. A lot of platforms (like WhatsApp) will not let you send messages that are totally empty. They want you to have at least one character. If you use a blank message generator, you can bypass this rule.</p>
-    
-    <ul>
-        <li>Sending surprising messages to friends.</li>
-        <li>Making funny interactions in group chats.</li>
-        <li>Sending replies that look empty in messaging apps.</li>
-    </ul>
+<h2>Sending Blank Messages Online</h2>
+<p>
+One of the popular things people use invisible text tools for is sending blank messages. A lot of platforms (like WhatsApp) will not let you send messages that are totally empty. They want you to have at least one character. If you use a blank message generator, you can bypass this rule.
+</p>
 
-    <h2>Invisible Text for Social Media</h2>
-    <p>Invisible characters are also really popular on social media for custom formatting. People use them for:</p>
-    <ul>
-        <li>Making Instagram bios look unique with custom spacing.</li>
-        <li>Adding extra spacing to captions where regular spaces don't work.</li>
-        <li>Creating "blank" usernames or very minimalist profiles.</li>
-    </ul>
+<ul>
+<li>Sending surprising messages to friends.</li>
+<li>Making funny interactions in group chats.</li>
+<li>Sending replies that look empty in messaging apps.</li>
+</ul>
 
-    <h2>Common Unicode Invisible Characters</h2>
-    <p>These characters work like invisible spaces, letting text exist without being visible:</p>
-    <ul>
-        <li><strong>Zero-width space:</strong> A character that doesn't take up width but acts as a divider.</li>
-        <li><strong>Non-breaking space:</strong> Prevents lines from breaking at that point.</li>
-        <li><strong>Hangul filler:</strong> A specific Unicode block often used for blank formatting.</li>
-    </ul>
+<h2>Invisible Text for Social Media</h2>
+<p>
+Invisible characters are also really popular on social media for custom formatting. People use them for:
+</p>
+<ul>
+<li>Making Instagram bios look unique with custom spacing.</li>
+<li>Adding extra spacing to captions where regular spaces don't work.</li>
+<li>Creating "blank" usernames or very minimalist profiles.</li>
+</ul>
 
-    <h2>How to Use an Invisible Text Generator</h2>
-    <p>Using a text generator is really simple and only takes a few seconds:</p>
-    <ul class="step-list">
-        <li>Open a website that has a text generator.</li>
-        <li>Click the button that says "Generate" or "Copy".</li>
-        <li>Copy the invisible text that it makes.</li>
-        <li>Paste it wherever you want (WhatsApp, Bio, Game Username).</li>
-    </ul>
+<h2>Common Unicode Invisible Characters</h2>
+<p>
+These characters work like invisible spaces, letting text exist without being visible:
+</p>
+<ul>
+<li><strong>Zero-width space:</strong> A character that doesn't take up width but acts as a divider.</li>
+<li><strong>Non-breaking space:</strong> Prevents lines from breaking at that point.</li>
+<li><strong>Hangul filler:</strong> A specific Unicode block often used for blank formatting.</li>
+</ul>
 
-    <p>Whether you want to send hidden messages or format your social media profiles, this tool makes it easy to create blank characters instantly.</p>
+<h2>How to Use an Invisible Text Generator</h2>
+<p>
+Using a text generator is really simple and only takes a few seconds:
+</p>
+<ul class="step-list">
+<li>Open a website that has a text generator.</li>
+<li>Click the button that says "Generate" or "Copy".</li>
+<li>Copy the invisible text that it makes.</li>
+<li>Paste it wherever you want (WhatsApp, Bio, Game Username).</li>
+</ul>
+
+<p>
+Whether you want to send hidden messages or format your social media profiles, this tool makes it easy to create blank characters instantly.
+</p>
 </div>
 
 </body>
 <div style="display: flex; justify-content: center; margin: 20px 0; font-family: sans-serif;">
-    
-    <table border="1" style="border-collapse: collapse; width: 90%; max-width: 700px; text-align: center; border: 1px solid #ccc;">
-        <thead style="background-color: #f4f4f4;">
-            <tr style="height: 30px;">
-                <th style="padding: 5px 10px; border: 1px solid #ccc;">Name</th>
-                <th style="padding: 5px 10px; border: 1px solid #ccc;">Unicode</th>
-                <th style="padding: 5px 10px; border: 1px solid #ccc;">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr style="height: 30px;">
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">Zero Width Space</td>
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">U+200B</td>
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">Adds invisible spacing</td>
-            </tr>
-            <tr style="height: 30px;">
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">Zero Width Non-Joiner</td>
-                <td style="padding: 10px; border: 1px solid #ccc;">U+200C</td>
-                <td style="padding: 10px; border: 1px solid #ccc;">Prevents character joining</td>
-            </tr>
-            <tr style="height: 30px;">
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">Zero Width Joiner</td>
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">U+200D</td>
-                <td style="padding: 10px; border: 1px solid #ccc;">Joins characters invisibly</td>
-            </tr>
-            <tr style="height: 30px;">
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">Word Joiner</td>
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">U+2060</td>
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">Prevents line breaks</td>
-            </tr>
-            <tr style="height: 30px;">
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">Invisible Separator</td>
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">U+2063</td>
-                <td style="padding: 5px 10px; border: 1px solid #ccc;">Hidden separator</td>
-            </tr>
-        </tbody>
-    </table>
+
+<table border="1" style="border-collapse: collapse; width: 90%; max-width: 700px; text-align: center; border: 1px solid #ccc;">
+<thead style="background-color: #f4f4f4;">
+<tr style="height: 30px;">
+<th style="padding: 5px 10px; border: 1px solid #ccc;">Name</th>
+<th style="padding: 5px 10px; border: 1px solid #ccc;">Unicode</th>
+<th style="padding: 5px 10px; border: 1px solid #ccc;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr style="height: 30px;">
+<td style="padding: 5px 10px; border: 1px solid #ccc;">Zero Width Space</td>
+<td style="padding: 5px 10px; border: 1px solid #ccc;">U+200B</td>
+<td style="padding: 5px 10px; border: 1px solid #ccc;">Adds invisible spacing</td>
+</tr>
+<tr style="height: 30px;">
+<td style="padding: 5px 10px; border: 1px solid #ccc;">Zero Width Non-Joiner</td>
+<td style="padding: 10px; border: 1px solid #ccc;">U+200C</td>
+<td style="padding: 10px; border: 1px solid #ccc;">Prevents character joining</td>
+</tr>
+<tr style="height: 30px;">
+<td style="padding: 5px 10px; border: 1px solid #ccc;">Zero Width Joiner</td>
+<td style="padding: 5px 10px; border: 1px solid #ccc;">U+200D</td>
+<td style="padding: 10px; border: 1px solid #ccc;">Joins characters invisibly</td>
+</tr>
+<tr style="height: 30px;">
+<td style="padding: 5px 10px; border: 1px solid #ccc;">Word Joiner</td>
+<td style="padding: 5px 10px; border: 1px solid #ccc;">U+2060</td>
+<td style="padding: 5px 10px; border: 1px solid #ccc;">Prevents line breaks</td>
+</tr>
+<tr style="height: 30px;">
+<td style="padding: 5px 10px; border: 1px solid #ccc;">Invisible Separator</td>
+<td style="padding: 5px 10px; border: 1px solid #ccc;">U+2063</td>
+<td style="padding: 5px 10px; border: 1px solid #ccc;">Hidden separator</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 
 
-    </section>
+</section>
 <div class="vault-card" style="margin-top: 3rem; background: #ffffff; border: 1px solid #d0e2f5; padding: 20px; border-radius: 2rem;">
-    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem;">
-        
-        <div style="width: 150px; height: 150px; position: relative;">
-           <img src="ha.jpg" alt="Invisible Text Generator"
-                            style="width: 100%; height: 100%; border-radius: 50%; object-fit: contain; border: 4px solid #f0f7ff; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
- </div>
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem;">
 
-        <div style="width: 100%;">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #0a1f31; margin-bottom: 10px;">About the Developer</h2>
-            <p style="font-size: 1rem; color: #1e3d60; font-weight: 600; margin-bottom: 10px;">Hello, I am Happy Sagar.</p>
-            <p style="font-size: 0.9rem; color: #46648b; line-height: 1.6; margin-bottom: 15px;">
-               I work on digital tools and online content. My aim is simple: to create useful information and tools that help people navigate their digital lives more effectively.
-            </p>
-            <p style="font-size: 0.95rem; color: #46648b; line-height: 1.6; margin-top: 0.8rem;">
-                I developed this tool for those who want to send <strong>invisible comments</strong> or messages on Instagram, Facebook, and other social media platforms. Additionally, this site allows you to decode and see those invisible messages in a <strong>'visible'</strong> form.
-            </p>
-            
-            <div style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: #f0f7ff; border-radius: 30px;">
-                <i class="fas fa-envelope" style="color: #3f6ef0;"></i>
-                <a href="mailto:mytexttools1@gmail.com" style="text-decoration: none; color: #0a263c; font-weight: 600; font-size: 0.9rem;">
-                    mytexttools1@gmail.com
-                </a>
-            </div>
-        </div>
-    </div>
+<div style="width: 150px; height: 150px; position: relative;">
+<img src="ha.jpg" alt="Invisible Text Generator"
+style="width: 100%; height: 100%; border-radius: 50%; object-fit: contain; border: 4px solid #f0f7ff; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+</div>
+
+<div style="width: 100%;">
+<h2 style="font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #0a1f31; margin-bottom: 10px;">About the Developer</h2>
+<p style="font-size: 1rem; color: #1e3d60; font-weight: 600; margin-bottom: 10px;">
+Hello, I am Happy Sagar.
+</p>
+<p style="font-size: 0.9rem; color: #46648b; line-height: 1.6; margin-bottom: 15px;">
+I work on digital tools and online content. My aim is simple: to create useful information and tools that help people navigate their digital lives more effectively.
+</p>
+<p style="font-size: 0.95rem; color: #46648b; line-height: 1.6; margin-top: 0.8rem;">
+I developed this tool for those who want to send <strong>invisible comments</strong> or messages on Instagram, Facebook, and other social media platforms. Additionally, this site allows you to decode and see those invisible messages in a <strong>'visible'</strong> form.
+</p>
+
+<div style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: #f0f7ff; border-radius: 30px;">
+<i class="fas fa-envelope" style="color: #3f6ef0;"></i>
+<a href="mailto:mytexttools1@gmail.com" style="text-decoration: none; color: #0a263c; font-weight: 600; font-size: 0.9rem;">
+mytexttools1@gmail.com
+</a>
+</div>
+</div>
+</div>
 </div>
 
 
 
 
-    <!-- FAQ SECTION --><section class="faq-section">
-        <h2>Invisible Text — Frequently Asked</h2>
-        <div class="faq-container">
-            <div class="faq-item active">
-                <div class="faq-question">
-                    1. What exactly is "invisible text"? <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        It uses Unicode zero-width characters (U+200B and U+200C) that are non-printing. These characters occupy no physical space on the screen, but computers still recognize them as data, allowing you to hide information in plain sight.
-                    </p>
-                </div>
-            </div>
+<!-- FAQ SECTION --><section class="faq-section">
+<h2>Invisible Text — Frequently Asked</h2>
+<div class="faq-container">
+<div class="faq-item active">
+<div class="faq-question">
+1. What exactly is "invisible text"? <i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>
+It uses Unicode zero-width characters (U+200B and U+200C) that are non-printing. These characters occupy no physical space on the screen, but computers still recognize them as data, allowing you to hide information in plain sight.
+</p>
+</div>
+</div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    2. How does the encoding process work? <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Each character of your message is converted into 8-bit binary. Our tool then replaces every '0' with a Zero-Width Space and every '1' with a Zero-Width Non-Joiner to create the invisible string.
-                    </p>
-                </div>
-            </div>
+<div class="faq-item">
+<div class="faq-question">
+2. How does the encoding process work? <i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>
+Each character of your message is converted into 8-bit binary. Our tool then replaces every '0' with a Zero-Width Space and every '1' with a Zero-Width Non-Joiner to create the invisible string.
+</p>
+</div>
+</div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    3. Where can I use this invisible text? <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Since these are standard Unicode characters, they work in Facebook and Instagram comments, DMs, and bios. They are also useful for creating "blank" usernames in games or Discord messages that appear empty.
-                    </p>
-                </div>
-            </div>
+<div class="faq-item">
+<div class="faq-question">
+3. Where can I use this invisible text? <i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>
+Since these are standard Unicode characters, they work in Facebook and Instagram comments, DMs, and bios. They are also useful for creating "blank" usernames in games or Discord messages that appear empty.
+</p>
+</div>
+</div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    4. Is my hidden data safe and private? <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Absolutely. All encoding and decoding happens locally in your browser. No data is sent to a server, and there is no tracking or data collection involved in the process.
-                    </p>
-                </div>
-            </div>
+<div class="faq-item">
+<div class="faq-question">
+4. Is my hidden data safe and private? <i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>
+Absolutely. All encoding and decoding happens locally in your browser. No data is sent to a server, and there is no tracking or data collection involved in the process.
+</p>
+</div>
+</div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    5. Why did my hidden message disappear? <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Some platforms, like Twitter, may automatically strip zero-width characters to prevent spam. If the decoder shows no message, the platform likely removed the invisible characters during transmission.
-                    </p>
-                </div>
-            </div>
+<div class="faq-item">
+<div class="faq-question">
+5. Why did my hidden message disappear? <i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>
+Some platforms, like Twitter, may automatically strip zero-width characters to prevent spam. If the decoder shows no message, the platform likely removed the invisible characters during transmission.
+</p>
+</div>
+</div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    6. What is the "Inspector" tab used for? <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        The Inspector analyzes text to find hidden characters. It provides a breakdown of total, visible, and zero-width characters, and allows you to strip them out to ensure your text is clean.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="faq-item">
+<div class="faq-question">
+6. What is the "Inspector" tab used for? <i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>
+The Inspector analyzes text to find hidden characters. It provides a breakdown of total, visible, and zero-width characters, and allows you to strip them out to ensure your text is clean.
+</p>
+</div>
+</div>
+</div>
+</section>
 
 
-    <script>
-        (function() {
-            // Zero-width characters
-            const ZW = {
-                ZWSP: '\u200B', // zero width space (binary 0)
-                ZWNJ: '\u200C' // zero width non-joiner (binary 1)
-            };
+<script>
+(function() {
+// Zero-width characters
+const ZW = {
+ZWSP: '\u200B', // zero width space (binary 0)
+ZWNJ: '\u200C' // zero width non-joiner (binary 1)
+};
 
-            // ========== ENCODER FUNCTIONS ==========
+// ========== ENCODER FUNCTIONS ==========
 
-            // Convert text to binary string (8 bits per character)
-            function textToBinary(str) {
-                let binary = '';
-                for (let i = 0; i < str.length; i++) {
-                    let code = str.charCodeAt(i);
-                    let bin = code.toString(2);
-                    // Pad with leading zeros to make 8 bits
-                    bin = '0'.repeat(8 - bin.length) + bin;
-                    binary += bin;
-                }
-                return binary;
-            }
+// Convert text to binary string (8 bits per character)
+function textToBinary(str) {
+let binary = '';
+for (let i = 0; i < str.length; i++) {
+let code = str.charCodeAt(i);
+let bin = code.toString(2);
+// Pad with leading zeros to make 8 bits
+bin = '0'.repeat(8 - bin.length) + bin;
+binary += bin;
+}
+return binary;
+}
 
-            // Convert binary string back to text
-            function binaryToText(binary) {
-                let text = '';
-                // Process 8 bits at a time
-                for (let i = 0; i < binary.length; i += 8) {
-                    let byte = binary.substr(i, 8);
-                    if (byte.length < 8) break;
-                    let code = parseInt(byte, 2);
-                    text += String.fromCharCode(code);
-                }
-                return text;
-            }
+// Convert binary string back to text
+function binaryToText(binary) {
+let text = '';
+// Process 8 bits at a time
+for (let i = 0; i < binary.length; i += 8) {
+let byte = binary.substr(i, 8);
+if (byte.length < 8) break;
+let code = parseInt(byte, 2);
+text += String.fromCharCode(code);
+}
+return text;
+}
 
-            // Encode visible text to invisible (zero-width) characters
-            function encodeToInvisible(visible) {
-                if (!visible) return '';
-                let binary = textToBinary(visible);
-                let invisible = '';
-                for (let bit of binary) {
-                    invisible += bit === '0' ? ZW.ZWSP: ZW.ZWNJ;
-                }
-                return invisible;
-            }
+// Encode visible text to invisible (zero-width) characters
+function encodeToInvisible(visible) {
+if (!visible) return '';
+let binary = textToBinary(visible);
+let invisible = '';
+for (let bit of binary) {
+invisible += bit === '0' ? ZW.ZWSP: ZW.ZWNJ;
+}
+return invisible;
+}
 
-            // Decode invisible characters back to visible text
-            function decodeFromInvisible(invisible) {
-                if (!invisible) return '';
+// Decode invisible characters back to visible text
+function decodeFromInvisible(invisible) {
+if (!invisible) return '';
 
-                // Extract only zero-width characters and convert to bits
-                let bits = '';
-                for (let char of invisible) {
-                    if (char === ZW.ZWSP) bits += '0';
-                    else if (char === ZW.ZWNJ) bits += '1';
-                    // Ignore any visible characters
-                }
+// Extract only zero-width characters and convert to bits
+let bits = '';
+for (let char of invisible) {
+if (char === ZW.ZWSP) bits += '0';
+else if (char === ZW.ZWNJ) bits += '1';
+// Ignore any visible characters
+}
 
-                if (bits.length === 0) return '';
-                if (bits.length % 8 !== 0) {
-                    console.warn('Binary length not multiple of 8');
-                    return '';
-                }
+if (bits.length === 0) return '';
+if (bits.length % 8 !== 0) {
+console.warn('Binary length not multiple of 8');
+return '';
+}
 
-                return binaryToText(bits);
-            }
+return binaryToText(bits);
+}
 
-            // ========== DOM Elements ==========
+// ========== DOM Elements ==========
 
-            // Encoder elements
-            const visibleInput = document.getElementById('visibleInput');
-            const visLen = document.getElementById('visLen');
-            const visWords = document.getElementById('visWords');
-            const zwCount = document.getElementById('zwCount');
-            const invisibleOutput = document.getElementById('invisibleOutput');
-            const encodeBtn = document.getElementById('encodeBtn');
-            const clearEncodeBtn = document.getElementById('clearEncodeBtn');
-            const copyInvisBtn = document.getElementById('copyInvisBtn');
+// Encoder elements
+const visibleInput = document.getElementById('visibleInput');
+const visLen = document.getElementById('visLen');
+const visWords = document.getElementById('visWords');
+const zwCount = document.getElementById('zwCount');
+const invisibleOutput = document.getElementById('invisibleOutput');
+const encodeBtn = document.getElementById('encodeBtn');
+const clearEncodeBtn = document.getElementById('clearEncodeBtn');
+const copyInvisBtn = document.getElementById('copyInvisBtn');
 
-            // Decoder elements
-            const invisibleInput = document.getElementById('invisibleInput');
-            const decodeBtn = document.getElementById('decodeBtn');
-            const clearDecodeBtn = document.getElementById('clearDecodeBtn');
-            const decodedOutput = document.getElementById('decodedOutput');
-            const copyDecodeBtn = document.getElementById('copyDecodeBtn');
+// Decoder elements
+const invisibleInput = document.getElementById('invisibleInput');
+const decodeBtn = document.getElementById('decodeBtn');
+const clearDecodeBtn = document.getElementById('clearDecodeBtn');
+const decodedOutput = document.getElementById('decodedOutput');
+const copyDecodeBtn = document.getElementById('copyDecodeBtn');
 
-            // Inspector elements
-            const inspectInput = document.getElementById('inspectInput');
-            const inspectTotal = document.getElementById('inspectTotal');
-            const inspectVisible = document.getElementById('inspectVisible');
-            const inspectZW = document.getElementById('inspectZW');
-            const zwBreakdown = document.getElementById('zwBreakdown');
-            const stripZWbtn = document.getElementById('stripZWbtn');
-            const copyInspectBtn = document.getElementById('copyInspectBtn');
+// Inspector elements
+const inspectInput = document.getElementById('inspectInput');
+const inspectTotal = document.getElementById('inspectTotal');
+const inspectVisible = document.getElementById('inspectVisible');
+const inspectZW = document.getElementById('inspectZW');
+const zwBreakdown = document.getElementById('zwBreakdown');
+const stripZWbtn = document.getElementById('stripZWbtn');
+const copyInspectBtn = document.getElementById('copyInspectBtn');
 
-            // ========== Event Listeners ==========
+// ========== Event Listeners ==========
 
-            // Update encoder stats
-            function updateEncoderStats() {
-                let txt = visibleInput.value;
-                visLen.innerText = txt.length;
+// Update encoder stats
+function updateEncoderStats() {
+let txt = visibleInput.value;
+visLen.innerText = txt.length;
 
-                // Count words
-                let wordCount = 0;
-                if (txt.trim()) {
-                    wordCount = txt.trim().split(/\s+/).length;
-                }
-                visWords.innerText = wordCount;
+// Count words
+let wordCount = 0;
+if (txt.trim()) {
+wordCount = txt.trim().split(/\s+/).length;
+}
+visWords.innerText = wordCount;
 
-                // Show estimated invisible chars (8 per visible char)
-                zwCount.innerText = txt.length * 8;
-            }
+// Show estimated invisible chars (8 per visible char)
+zwCount.innerText = txt.length * 8;
+}
 
-            visibleInput.addEventListener('input', updateEncoderStats);
+visibleInput.addEventListener('input', updateEncoderStats);
 
-            // Encode button
-            encodeBtn.addEventListener('click', () => {
-                let visible = visibleInput.value;
-                let invisible = encodeToInvisible(visible);
-                invisibleOutput.innerText = invisible || '(empty)';
-            });
+// Encode button
+encodeBtn.addEventListener('click', () => {
+let visible = visibleInput.value;
+let invisible = encodeToInvisible(visible);
+invisibleOutput.innerText = invisible || '(empty)';
+});
 
-            // Clear encoder
-            clearEncodeBtn.addEventListener('click', () => {
-                visibleInput.value = '';
-                invisibleOutput.innerText = '';
-                updateEncoderStats();
-            });
+// Clear encoder
+clearEncodeBtn.addEventListener('click', () => {
+visibleInput.value = '';
+invisibleOutput.innerText = '';
+updateEncoderStats();
+});
 
-            // Copy invisible text
-            copyInvisBtn.addEventListener('click', () => {
-                let txt = invisibleOutput.innerText;
-                if (txt && txt !== '(empty)') {
-                    navigator.clipboard.writeText(txt).then(() => {
-                        copyInvisBtn.innerHTML = '<i class="fas fa-check"></i>';
-                        setTimeout(() => copyInvisBtn.innerHTML = '<i class="far fa-clipboard"></i>', 1200);
-                    });
-                }
-            });
+// Copy invisible text
+copyInvisBtn.addEventListener('click', () => {
+let txt = invisibleOutput.innerText;
+if (txt && txt !== '(empty)') {
+navigator.clipboard.writeText(txt).then(() => {
+copyInvisBtn.innerHTML = '<i class="fas fa-check"></i>';
+setTimeout(() => copyInvisBtn.innerHTML = '<i class="far fa-clipboard"></i>', 1200);
+});
+}
+});
 
-            // Decode button
-            decodeBtn.addEventListener('click',
-                () => {
-                    let invisible = invisibleInput.value;
-                    let decoded = decodeFromInvisible(invisible);
-                    decodedOutput.innerText = decoded || '(no valid hidden message)';
-                });
+// Decode button
+decodeBtn.addEventListener('click',
+() => {
+let invisible = invisibleInput.value;
+let decoded = decodeFromInvisible(invisible);
+decodedOutput.innerText = decoded || '(no valid hidden message)';
+});
 
-            // Clear decoder
-            clearDecodeBtn.addEventListener('click',
-                () => {
-                    invisibleInput.value = '';
-                    decodedOutput.innerText = '—';
-                });
+// Clear decoder
+clearDecodeBtn.addEventListener('click',
+() => {
+invisibleInput.value = '';
+decodedOutput.innerText = '—';
+});
 
-            // Copy decoded text
-            copyDecodeBtn.addEventListener('click',
-                () => {
-                    let txt = decodedOutput.innerText;
-                    if (txt && txt !== '—' && txt !== '(no valid hidden message)') {
-                        navigator.clipboard.writeText(txt).then(() => {
-                            copyDecodeBtn.innerHTML = '<i class="fas fa-check"></i>';
-                            setTimeout(() => copyDecodeBtn.innerHTML = '<i class="far fa-clipboard"></i>', 1200);
-                        });
-                    }
-                });
+// Copy decoded text
+copyDecodeBtn.addEventListener('click',
+() => {
+let txt = decodedOutput.innerText;
+if (txt && txt !== '—' && txt !== '(no valid hidden message)') {
+navigator.clipboard.writeText(txt).then(() => {
+copyDecodeBtn.innerHTML = '<i class="fas fa-check"></i>';
+setTimeout(() => copyDecodeBtn.innerHTML = '<i class="far fa-clipboard"></i>', 1200);
+});
+}
+});
 
-            // Inspector functions
-            function updateInspector() {
-                let txt = inspectInput.value;
-                let total = txt.length;
-                let visibleCount = 0;
-                let zwCount = 0;
-                let zwMap = {
-                    '\u200B': 0, '\u200C': 0
-                };
+// Inspector functions
+function updateInspector() {
+let txt = inspectInput.value;
+let total = txt.length;
+let visibleCount = 0;
+let zwCount = 0;
+let zwMap = {
+'\u200B': 0, '\u200C': 0
+};
 
-                for (let char of txt) {
-                    if (char === ZW.ZWSP) {
-                        zwCount++;
-                        zwMap[ZW.ZWSP]++;
-                    } else if (char === ZW.ZWNJ) {
-                        zwCount++;
-                        zwMap[ZW.ZWNJ]++;
-                    } else {
-                        visibleCount++;
-                    }
-                }
+for (let char of txt) {
+if (char === ZW.ZWSP) {
+zwCount++;
+zwMap[ZW.ZWSP]++;
+} else if (char === ZW.ZWNJ) {
+zwCount++;
+zwMap[ZW.ZWNJ]++;
+} else {
+visibleCount++;
+}
+}
 
-                inspectTotal.innerText = total;
-                inspectVisible.innerText = visibleCount;
-                inspectZW.innerText = zwCount;
+inspectTotal.innerText = total;
+inspectVisible.innerText = visibleCount;
+inspectZW.innerText = zwCount;
 
-                // Build breakdown
-                let html = '';
-                if (zwCount === 0) {
-                    html = '<span class="badge-extra">no zero‑width chars</span>';
-                } else {
-                    if (zwMap[ZW.ZWSP] > 0) {
-                        html += `<div class="char-item"><span class="char">​</span>ZWSP: ${zwMap[ZW.ZWSP]}</div>`;
-                    }
-                    if (zwMap[ZW.ZWNJ] > 0) {
-                        html += `<div class="char-item"><span class="char">‌</span>ZWNJ: ${zwMap[ZW.ZWNJ]}</div>`;
-                    }
-                }
-                zwBreakdown.innerHTML = html;
-            }
+// Build breakdown
+let html = '';
+if (zwCount === 0) {
+html = '<span class="badge-extra">no zero‑width chars</span>';
+} else {
+if (zwMap[ZW.ZWSP] > 0) {
+html += `<div class="char-item"><span class="char">​</span>ZWSP: ${zwMap[ZW.ZWSP]}</div>`;
+}
+if (zwMap[ZW.ZWNJ] > 0) {
+html += `<div class="char-item"><span class="char">‌</span>ZWNJ: ${zwMap[ZW.ZWNJ]}</div>`;
+}
+}
+zwBreakdown.innerHTML = html;
+}
 
-            inspectInput.addEventListener('input', updateInspector);
+inspectInput.addEventListener('input', updateInspector);
 
-            // Strip zero-width characters
-            stripZWbtn.addEventListener('click', () => {
-                let txt = inspectInput.value;
-                let stripped = txt.replace(/[\u200B\u200C]/g, '');
-                inspectInput.value = stripped;
-                updateInspector();
-            });
+// Strip zero-width characters
+stripZWbtn.addEventListener('click', () => {
+let txt = inspectInput.value;
+let stripped = txt.replace(/[\u200B\u200C]/g, '');
+inspectInput.value = stripped;
+updateInspector();
+});
 
-            // Copy stripped text
-            copyInspectBtn.addEventListener('click', () => {
-                let txt = inspectInput.value.replace(/[\u200B\u200C]/g, '');
-                navigator.clipboard.writeText(txt).then(() => {
-                    copyInspectBtn.innerHTML = '<i class="fas fa-check"></i> copied';
-                    setTimeout(() => copyInspectBtn.innerHTML = '<i class="fas fa-copy"></i> copy stripped', 1200);
-                });
-            });
+// Copy stripped text
+copyInspectBtn.addEventListener('click', () => {
+let txt = inspectInput.value.replace(/[\u200B\u200C]/g, '');
+navigator.clipboard.writeText(txt).then(() => {
+copyInspectBtn.innerHTML = '<i class="fas fa-check"></i> copied';
+setTimeout(() => copyInspectBtn.innerHTML = '<i class="fas fa-copy"></i> copy stripped', 1200);
+});
+});
 
-            // ========== Tab switching ==========
-            const tabs = document.querySelectorAll('.tab-btn');
-            const pages = document.querySelectorAll('.page');
+// ========== Tab switching ==========
+const tabs = document.querySelectorAll('.tab-btn');
+const pages = document.querySelectorAll('.page');
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    let target = tab.dataset.page;
+tabs.forEach(tab => {
+tab.addEventListener('click', () => {
+let target = tab.dataset.page;
 
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
+tabs.forEach(t => t.classList.remove('active'));
+tab.classList.add('active');
 
-                    pages.forEach(p => p.classList.remove('active-page'));
-                    document.getElementById('page-' + target).classList.add('active-page');
+pages.forEach(p => p.classList.remove('active-page'));
+document.getElementById('page-' + target).classList.add('active-page');
 
-                    // Refresh inspector when switching to that tab
-                    if (target === 'inspector') {
-                        updateInspector();
-                    }
-                });
-            });
+// Refresh inspector when switching to that tab
+if (target === 'inspector') {
+updateInspector();
+}
+});
+});
 
-            // ========== FAQ accordion ==========
-            const faqItems = document.querySelectorAll('.faq-item');
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                question.addEventListener('click',
-                    () => {
-                        item.classList.toggle('active');
-                    });
-            });
+// ========== FAQ accordion ==========
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+const question = item.querySelector('.faq-question');
+question.addEventListener('click',
+() => {
+item.classList.toggle('active');
+});
+});
 
-            // ========== BANNER COPY (invisible "hello") ==========
-            const copySocialDemo = document.getElementById('copySocialDemo');
-            const socialDemoBanner = document.getElementById('socialDemoBanner');
-            // invisible version of "hello"
-            const invisibleHello = encodeToInvisible('hello');
+// ========== BANNER COPY (invisible "hello") ==========
+const copySocialDemo = document.getElementById('copySocialDemo');
+const socialDemoBanner = document.getElementById('socialDemoBanner');
+// invisible version of "hello"
+const invisibleHello = encodeToInvisible('hello');
 
-            copySocialDemo.addEventListener('click', () => {
-                navigator.clipboard.writeText(invisibleHello).then(() => {
-                    let originalHtml = copySocialDemo.innerHTML;
-                    copySocialDemo.innerHTML = '<i class="fas fa-check"></i>';
-                    setTimeout(() => copySocialDemo.innerHTML = originalHtml, 1200);
-                });
-            });
+copySocialDemo.addEventListener('click', () => {
+navigator.clipboard.writeText(invisibleHello).then(() => {
+let originalHtml = copySocialDemo.innerHTML;
+copySocialDemo.innerHTML = '<i class="fas fa-check"></i>';
+setTimeout(() => copySocialDemo.innerHTML = originalHtml, 1200);
+});
+});
 
-            // ========== Initialize ==========
-            // Set initial encoder stats
-            updateEncoderStats();
+// ========== Initialize ==========
+// Set initial encoder stats
+updateEncoderStats();
 
-            // Encode default message
-            invisibleOutput.innerText = encodeToInvisible(visibleInput.value);
+// Encode default message
+invisibleOutput.innerText = encodeToInvisible(visibleInput.value);
 
-            // Set placeholder for decoder with example
-            let example = encodeToInvisible('secret');
-            invisibleInput.placeholder = example + ' (paste or try this)';
+// Set placeholder for decoder with example
+let example = encodeToInvisible('secret');
+invisibleInput.placeholder = example + ' (paste or try this)';
 
-            // Initialize inspector
-            updateInspector();
+// Initialize inspector
+updateInspector();
 
-            // Prefill inspector with a fun example (visible + invisible)
-            inspectInput.value = "Check this out: 👋" + invisibleHello + " (can you see?)";
-            updateInspector();
+// Prefill inspector with a fun example (visible + invisible)
+inspectInput.value = "Check this out: 👋" + invisibleHello + " (can you see?)";
+updateInspector();
 
-        })();
-    </script>
+})();
+</script>
 </body>
 </html>
